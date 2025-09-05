@@ -1,17 +1,20 @@
 @tool
+## A 2D polygon with rounded corners.
 extends Polygon2D
 class_name RoundedPolygon2D
 
-@export var corner_radius: float = 0:
+## Sets the corner radius of all vertices of the polygon.
+@export_range(0, 1, 1, "or_greater", "suffix:px") var corner_radius: int = 0:
 	set(v):
-		corner_radius = max(v, 0)
+		corner_radius = v
 		queue_redraw()
-@export var corner_detail: int = 8:
+## Sets the number of divisions each corner has.
+@export_range(0, 20, 1) var corner_detail: int = 8:
 	set(v):
-		corner_detail = max(v, 0)
+		corner_detail = v
 		queue_redraw()
 
-var polygon_copy: PackedVector2Array
+var _polygon_copy: PackedVector2Array
 
 func _process(delta):
 	if polygon.size() >= 3:
@@ -19,8 +22,8 @@ func _process(delta):
 	else:
 		polygons.clear()
 
-	if polygon_copy != polygon:
-		polygon_copy = polygon
+	if _polygon_copy != polygon:
+		_polygon_copy = polygon
 		queue_redraw()
 
 func _draw():

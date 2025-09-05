@@ -22,9 +22,9 @@
      inkscape:pagecheckerboard="1"
      inkscape:deskcolor="#505050"
      showgrid="true"
-     inkscape:zoom="25.21875"
-     inkscape:cx="13.898389"
-     inkscape:cy="11.16233"
+     inkscape:zoom="22.627417"
+     inkscape:cx="9.1260969"
+     inkscape:cy="11.070641"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -53,5 +53,6 @@
      stroke-width="2"
      d="M 14,14 H 8 C 5,14 2,12 2,8 2,4 5.1212093,2 8,2 h 6 L 8,8 Z"
      id="path1"
-     sodipodi:nodetypes="cszsccc" />
+     sodipodi:nodetypes="cszsccc"
+     style="fill:#789cff;fill-opacity:1;stroke:#789cff;stroke-opacity:1" />
 </svg>
