@@ -1,21 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://efwag48cnfuw"]
+[gd_scene load_steps=2 format=3 uid="uid://efwag48cnfuw"]
 
 [ext_resource type="Script" uid="uid://gdsdtd32sye5" path="res://addons/RoundedPolygon2D/rounded_polygon_2d.gd" id="1_jeex0"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jeex0"]
-corner_detail = 20
 
 [node name="Node2D" type="Node2D"]
 
 [node name="RoundedPolygon2D" type="Polygon2D" parent="."]
-position = Vector2(544, 292)
+position = Vector2(633, 354)
 scale = Vector2(0.361365, 0.37659)
-polygon = PackedVector2Array(-1450, 369, -1256.35, -618.709, -979.619, -432.831, -791.444, -677.128, -711.192, -387.689, -207, -694, -431.697, -464.696, -343.144, -424.865, -866.16, -260.23, -107.924, -193.845, -410, 73, 152.2, 7.96619, 191, 332)
+polygon = PackedVector2Array(-1450, 369, -1339.37, -371.757, -481.508, -395.656, -293.332, 127.46, 199.245, -193.845, 191, 332)
 polygons = [null]
 script = ExtResource("1_jeex0")
+corner_radius = 160
 metadata/_custom_type_script = "uid://gdsdtd32sye5"
-
-[node name="Panel" type="Panel" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_jeex0")
