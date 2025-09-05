@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://efwag48cnfuw"]
+
+[ext_resource type="Script" uid="uid://gdsdtd32sye5" path="res://addons/RoundedPolygon2D/rounded_polygon_2d.gd" id="1_t6lng"]
+
+[node name="Node2D" type="Node2D"]
+metadata/_edit_vertical_guides_ = [185.0]
+
+[node name="RoundedPolygon2D" type="Polygon2D" parent="."]
+position = Vector2(9, 240)
+polygon = PackedVector2Array(-1450, 369, -1381, -810, -999, -188, -832, -523, -207, -694, -410, 73, -7, -12, 185, -609, 191, 332)
+polygons = [null]
+script = ExtResource("1_t6lng")
+corner_radius = 200.0
+corner_detail = 0
+metadata/_custom_type_script = "uid://gdsdtd32sye5"
