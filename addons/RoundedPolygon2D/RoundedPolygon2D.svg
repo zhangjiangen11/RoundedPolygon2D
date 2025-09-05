@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    width="16"
    height="16"
-   viewBox="0 0 4.2333332 4.2333333"
    version="1.1"
    id="svg1"
-   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
    sodipodi:docname="RoundedPolygon2D.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
   <sodipodi:namedview
      id="namedview1"
      pagecolor="#505050"
@@ -22,24 +21,23 @@
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="1"
      inkscape:deskcolor="#505050"
-     inkscape:document-units="mm"
      showgrid="true"
-     inkscape:zoom="22.627417"
-     inkscape:cx="13.766485"
-     inkscape:cy="12.44066"
+     inkscape:zoom="25.21875"
+     inkscape:cx="13.898389"
+     inkscape:cy="11.16233"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1">
+     inkscape:current-layer="svg1">
     <inkscape:grid
        id="grid1"
        units="px"
        originx="0"
        originy="0"
-       spacingx="0.26458333"
-       spacingy="0.26458333"
+       spacingx="1"
+       spacingy="1"
        empcolor="#0099e5"
        empopacity="0.30196078"
        color="#0099e5"
@@ -48,20 +46,12 @@
        enabled="true"
        visible="true" />
   </sodipodi:namedview>
-  <defs
-     id="defs1" />
-  <g
-     inkscape:label="Capa 1"
-     inkscape:groupmode="layer"
-     id="layer1">
-    <path
-       fill="#8da5f3"
-       stroke="#8da5f3"
-       stroke-linejoin="round"
-       stroke-width="0.529167"
-       d="m 2.9104166,3.7041665 -2.38124977,4e-7 V 0.52916683 H 3.7041669 l -1.5875,1.58750007 0.7937497,-3e-7 c 0.5291667,-2e-7 0.79375,0.2645833 0.79375,0.7937504 0,0.5291662 -0.2645833,0.7937495 -0.79375,0.7937495 z"
-       id="path1"
-       sodipodi:nodetypes="cccccssc"
-       style="stroke-width:0.529;stroke-dasharray:none" />
-  </g>
+  <path
+     fill="#8da5f3"
+     stroke="#8da5f3"
+     stroke-linejoin="round"
+     stroke-width="2"
+     d="M 14,14 H 8 C 5,14 2,12 2,8 2,4 5.1212093,2 8,2 h 6 L 8,8 Z"
+     id="path1"
+     sodipodi:nodetypes="cszsccc" />
 </svg>
