@@ -26,6 +26,7 @@ class_name RoundedPolygon2D
 
 ## The computed polygon with rounded corners.
 var rounded_polygon: PackedVector2Array
+## The computed vertex colors from the rounded corners.
 var rounded_vertex_colors: PackedColorArray
 
 func _draw():

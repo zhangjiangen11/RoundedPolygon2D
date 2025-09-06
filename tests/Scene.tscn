@@ -12,8 +12,6 @@ polygon = PackedVector2Array(-1089.05, 138.081, -1089.05, -268.196, -678.604, -2
 uv = PackedVector2Array(-914.072, 387.689, -941.435, -517.805, -695.167, 23.8986, -339.447, -1139.17, 229.705, -34.5203, 207.815, -945.325, 415.774, -310.683, 363.784, 557.636)
 polygons = [null]
 script = ExtResource("1_jeex0")
-corner_radius = 1140
-corner_detail = 0
 metadata/_custom_type_script = "uid://gdsdtd32sye5"
 
 [node name="Polygon2D" type="Polygon2D" parent="."]

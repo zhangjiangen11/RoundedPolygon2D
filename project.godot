@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Rounded corners polygon"
+config/name="RoundedPolygon2D"
 run/main_scene="uid://efwag48cnfuw"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
