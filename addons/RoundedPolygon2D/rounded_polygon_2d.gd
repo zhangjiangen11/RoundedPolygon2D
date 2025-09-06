@@ -26,32 +26,31 @@ class_name RoundedPolygon2D
 
 ## The computed polygon with rounded corners.
 var rounded_polygon: PackedVector2Array
-
-var _polygon_copy: PackedVector2Array
-
-func _process(delta):
-	# Disables rendering the default Polygon2D
-	polygons = [null]
-
-	if _polygon_copy != polygon:
-		_polygon_copy = polygon
-		queue_redraw()
+var rounded_vertex_colors: PackedColorArray
 
 func _draw():
 	if polygon.size() < 3:
 		return
 
 	if not corner_radius or not corner_detail:
-		draw_polygon(polygon, [color])
+		var colors: PackedColorArray
+		if vertex_colors:
+			draw_polygon(polygon, vertex_colors)
+		else:
+			draw_polygon(polygon, [color])
 		return
 
-
+	# Disables rendering the default Polygon2D
 	polygons = [null]
 
 	rounded_polygon = _build_rounded_polygon()
-	#draw_polyline(rounded_polygon, Color.RED)
-	draw_polygon(rounded_polygon, [color])
-#
+	rounded_vertex_colors = _build_vertex_colors()
+
+	draw_polygon(rounded_polygon, rounded_vertex_colors)
+
+	# Debug
+	#draw_polyline(rounded_polygon, Color.RED, 2)
+
 func _build_rounded_polygon() -> PackedVector2Array:
 	var points: PackedVector2Array
 
@@ -98,3 +97,39 @@ func _build_rounded_polygon() -> PackedVector2Array:
 		points.append_array(arc_points)
 		points.append(anchor_after)
 	return points
+
+func _build_rounded_uv() -> PackedVector2Array:
+	var points: PackedVector2Array
+	return points
+
+func _build_vertex_colors() -> PackedColorArray:
+	if not vertex_colors:
+		return [color]
+
+	var colors: PackedColorArray
+	for i in range(polygon.size()):
+		# Triangle points
+		var a = polygon[i - 1]
+		var b = polygon[i]
+		var c = polygon[(i + 1) % polygon.size()]
+
+		# In case that there aren't enough vertex colors for each vertex of the polygon
+		# it will use the polygon's color, funny that Polygon2D says that it does
+		# has the same functionality but as for godot 4.4 it isn't working
+		var mix_colors: PackedColorArray
+		for j in range(-1, 2):
+			var polygon_index = posmod(i + j, polygon.size())
+			if polygon_index >= vertex_colors.size():
+				mix_colors.append(color)
+			else:
+				mix_colors.append(vertex_colors[polygon_index])
+
+		# Color each vertex using the barycentric coordenates
+		for j in range(corner_detail + 1):
+			var corner_point = rounded_polygon[(i * (corner_detail + 1) + j) % rounded_polygon.size()]
+			var bary = RoundedPolygon2DUtils.get_2d_triangle_barycentric_coords(corner_point, a, b, c)
+			var mix_weights: PackedFloat32Array = [bary[0], bary[1], bary[2]]
+			colors.append(RoundedPolygon2DUtils.mix_colors(mix_colors, mix_weights))
+
+	colors.resize(rounded_polygon.size())
+	return colors

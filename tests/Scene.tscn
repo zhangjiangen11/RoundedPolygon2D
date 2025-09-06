@@ -1,9 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://efwag48cnfuw"]
+[gd_scene load_steps=2 format=3 uid="uid://efwag48cnfuw"]
 
 [ext_resource type="Script" uid="uid://gdsdtd32sye5" path="res://addons/RoundedPolygon2D/rounded_polygon_2d.gd" id="1_jeex0"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_530jv"]
-size = Vector2(128, 128)
 
 [node name="Node2D" type="Node2D"]
 
@@ -11,16 +8,16 @@ size = Vector2(128, 128)
 position = Vector2(526, 363)
 scale = Vector2(0.365456, 0.37659)
 invert_border = 423.4
-polygon = PackedVector2Array(-928, 96, -928, -96, -576, -96, -672, 96)
+polygon = PackedVector2Array(-1089.05, 138.081, -1089.05, -268.196, -678.604, -276.162, -686.813, 119.493)
 uv = PackedVector2Array(-914.072, 387.689, -941.435, -517.805, -695.167, 23.8986, -339.447, -1139.17, 229.705, -34.5203, 207.815, -945.325, 415.774, -310.683, 363.784, 557.636)
 polygons = [null]
 script = ExtResource("1_jeex0")
-corner_radius = 40
+corner_radius = 1140
+corner_detail = 0
 metadata/_custom_type_script = "uid://gdsdtd32sye5"
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 position = Vector2(256, -22)
-color = Color(0.910115, 0.400478, 0.841948, 1)
-texture = SubResource("PlaceholderTexture2D_530jv")
 polygon = PackedVector2Array(672, 96, 704, 64, 800, 64, 832, 96, 832, 192, 800, 224, 704, 224, 672, 192)
 uv = PackedVector2Array(1.22786e-05, 32, 32, -1.49012e-07, 96, -1.43051e-06, 128, 32, 128, 96, 96, 128, 32, 128, -6.4373e-06, 96)
+vertex_colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
