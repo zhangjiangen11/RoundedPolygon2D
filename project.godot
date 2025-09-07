@@ -18,6 +18,12 @@ config/features=PackedStringArray("4.4", "GL Compatibility")
 
 window/stretch/mode="canvas_items"
 
+[editor]
+
+movie_writer/mjpeg_quality=0.9
+movie_writer/movie_file="C:/Users/Usuario/Documents/Code/Godot/RoundedPolygon2D/assets/Examples.avi"
+movie_writer/fps=30
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/roundedpolygon2d/plugin.cfg")
