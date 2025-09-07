@@ -7,7 +7,7 @@ A Godot addon that extends the Polygon2D node to allow rounded corners. <br> <br
 + Corner detail
 + Uniform and non-uniform corners
 + Vertex colors
-* Textures with UV mapping
++ Textures with UV mapping
 
-## Example
+## Examples
 <img src="assets/Examples.gif">
