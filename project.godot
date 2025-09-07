@@ -24,6 +24,4 @@ enabled=PackedStringArray("res://addons/roundedpolygon2d/plugin.cfg")
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.186461, 0.336629, 0.794098, 1)

@@ -7,23 +7,14 @@ class_name RoundedPolygon2D
 @export_range(0, 1, 1, "or_greater", "suffix:px") var corner_radius: int = 0:
 	set(v):
 		corner_radius = v
-		# Uses default polygon if rounding is not necessary
-		if corner_radius == 0:
-			polygons = []
-		else:
-			polygons = [null]
+		_check_drawing_mode()
 		queue_redraw()
 
 ## Sets the number of divisions each corner has.
 @export_range(0, 20, 1) var corner_detail: int = 8:
 	set(v):
 		corner_detail = v
-		# Uses default polygon if rounding is not necessary
-		if corner_detail == 0:
-			polygons = []
-		else:
-			polygons = [null]
-
+		_check_drawing_mode()
 		queue_redraw()
 
 ## If [code]true[/code], makes both sides of the rounded corners the same width if one of the sides
@@ -32,7 +23,7 @@ class_name RoundedPolygon2D
 @export var uniform_corners: bool = true:
 	set(v):
 		uniform_corners = v
-		polygons = []
+		_check_drawing_mode()
 		queue_redraw()
 
 
@@ -42,6 +33,13 @@ var rounded_polygon: PackedVector2Array
 var rounded_vertex_colors: PackedColorArray
 ## The computed uv with rounded corners.
 var rounded_uv: PackedVector2Array
+
+func _check_drawing_mode():
+	# Toggles the default Polygon2D if rounding is not necessary
+	if corner_radius == 0 or corner_detail == 0:
+		polygons.clear()
+	else:
+		polygons = [null]
 
 func _draw():
 	if polygon.size() < 3:
@@ -60,6 +58,8 @@ func _draw():
 
 	# Debug
 	#draw_polyline(rounded_polygon, Color.RED, 2)
+	#for point in rounded_polygon:
+		#draw_circle(point, 2, Color("white", 0.5))
 
 func _build_rounded_polygon() -> PackedVector2Array:
 	var points: PackedVector2Array
@@ -75,17 +75,19 @@ func _build_rounded_polygon() -> PackedVector2Array:
 
 		# Locks the anchors in case the middle point between the points is smaller
 		# than the corner radius
+		# NOTE: mid point is moved backwards to avoid overlapping
 		if uniform_corners:
 			var mid_point = min(point.distance_to(point_before), point.distance_to(point_after)) / 2.0
+			mid_point -= 0.1
 			if corner_radius > mid_point:
 				distance_a = mid_point
 				distance_b = mid_point
 		else:
-			var mid_point_b = point.distance_to(point_before) / 2.0
+			var mid_point_b = point.distance_to(point_before) / 2.0 - 0.1
 			if corner_radius > mid_point_b:
 				distance_b = mid_point_b
 
-			var mid_point_a = point.distance_to(point_after) / 2.0
+			var mid_point_a = point.distance_to(point_after) / 2.0 - 0.1
 			if corner_radius > mid_point_a:
 				distance_a = mid_point_a
 
@@ -96,8 +98,8 @@ func _build_rounded_polygon() -> PackedVector2Array:
 		var arc_points: PackedVector2Array
 		for j in range(1, corner_detail):
 			var arc_point: Vector2 = anchor_before.bezier_interpolate(
-				point + direction_b * distance_b / 2.0,
-				point + direction_a * distance_a / 2.0,
+				point.lerp(anchor_before, 0.5),
+				point.lerp(anchor_after, 0.5),
 				anchor_after,
 				float(j) / corner_detail
 			)
