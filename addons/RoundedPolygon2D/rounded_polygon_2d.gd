@@ -7,12 +7,23 @@ class_name RoundedPolygon2D
 @export_range(0, 1, 1, "or_greater", "suffix:px") var corner_radius: int = 0:
 	set(v):
 		corner_radius = v
+		# Uses default polygon if rounding is not necessary
+		if corner_radius == 0:
+			polygons = []
+		else:
+			polygons = [null]
 		queue_redraw()
 
 ## Sets the number of divisions each corner has.
 @export_range(0, 20, 1) var corner_detail: int = 8:
 	set(v):
 		corner_detail = v
+		# Uses default polygon if rounding is not necessary
+		if corner_detail == 0:
+			polygons = []
+		else:
+			polygons = [null]
+
 		queue_redraw()
 
 ## If [code]true[/code], makes both sides of the rounded corners the same width if one of the sides
@@ -21,6 +32,7 @@ class_name RoundedPolygon2D
 @export var uniform_corners: bool = true:
 	set(v):
 		uniform_corners = v
+		polygons = []
 		queue_redraw()
 
 
@@ -28,26 +40,23 @@ class_name RoundedPolygon2D
 var rounded_polygon: PackedVector2Array
 ## The computed vertex colors from the rounded corners.
 var rounded_vertex_colors: PackedColorArray
+## The computed uv with rounded corners.
+var rounded_uv: PackedVector2Array
 
 func _draw():
 	if polygon.size() < 3:
 		return
 
 	if not corner_radius or not corner_detail:
-		var colors: PackedColorArray
-		if vertex_colors:
-			draw_polygon(polygon, vertex_colors)
-		else:
-			draw_polygon(polygon, [color])
 		return
 
-	# Disables rendering the default Polygon2D
 	polygons = [null]
 
 	rounded_polygon = _build_rounded_polygon()
 	rounded_vertex_colors = _build_vertex_colors()
+	rounded_uv = _build_rounded_uv()
 
-	draw_polygon(rounded_polygon, rounded_vertex_colors)
+	draw_polygon(rounded_polygon, rounded_vertex_colors, rounded_uv, texture)
 
 	# Debug
 	#draw_polyline(rounded_polygon, Color.RED, 2)
@@ -100,7 +109,36 @@ func _build_rounded_polygon() -> PackedVector2Array:
 	return points
 
 func _build_rounded_uv() -> PackedVector2Array:
+	if not texture:
+		return []
+
 	var points: PackedVector2Array
+
+	for i in range(polygon.size()):
+		var polygon_triangle: PackedVector2Array
+		var uv_triangle: PackedVector2Array
+
+		if polygon.size() != uv.size():
+			return []
+
+		# Get triangles
+		for j in range(-1, 2):
+			var polygon_index = posmod(i + j, polygon.size())
+			polygon_triangle.append(polygon[polygon_index])
+			uv_triangle.append(uv[polygon_index])
+
+		for j in range(corner_detail + 1):
+			var corner_point = rounded_polygon[(i * (corner_detail + 1) + j) % rounded_polygon.size()]
+			var polygon_bary = RoundedPolygon2DUtils.get_2d_triangle_barycentric_coords(
+				corner_point,
+				polygon_triangle[0],
+				polygon_triangle[1],
+				polygon_triangle[2],
+				)
+			var uv_point = RoundedPolygon2DUtils.barycentric_coords_to_cartesian(uv_triangle, polygon_bary)
+			uv_point /= texture.get_size()
+			points.append(uv_point)
+
 	return points
 
 func _build_vertex_colors() -> PackedColorArray:
@@ -109,17 +147,16 @@ func _build_vertex_colors() -> PackedColorArray:
 
 	var colors: PackedColorArray
 	for i in range(polygon.size()):
-		# Triangle points
-		var a = polygon[i - 1]
-		var b = polygon[i]
-		var c = polygon[(i + 1) % polygon.size()]
-
-		# In case that there aren't enough vertex colors for each vertex of the polygon
-		# it will use the polygon's color, funny that Polygon2D says that it does
-		# has the same functionality but as for godot 4.4 it isn't working
+		var polygon_triangle: PackedVector2Array
 		var mix_colors: PackedColorArray
+
 		for j in range(-1, 2):
 			var polygon_index = posmod(i + j, polygon.size())
+			polygon_triangle.append(polygon[polygon_index])
+
+			# In case that there aren't enough vertex colors for each vertex of the polygon
+			# it will use the polygon's color, funny that Polygon2D says that it does
+			# has the same functionality but as for godot 4.4 it isn't working
 			if polygon_index >= vertex_colors.size():
 				mix_colors.append(color)
 			else:
@@ -128,9 +165,12 @@ func _build_vertex_colors() -> PackedColorArray:
 		# Color each vertex using the barycentric coordenates
 		for j in range(corner_detail + 1):
 			var corner_point = rounded_polygon[(i * (corner_detail + 1) + j) % rounded_polygon.size()]
-			var bary = RoundedPolygon2DUtils.get_2d_triangle_barycentric_coords(corner_point, a, b, c)
+			var bary = RoundedPolygon2DUtils.get_2d_triangle_barycentric_coords(
+				corner_point,
+				polygon_triangle[0],
+				polygon_triangle[1],
+				polygon_triangle[2],
+				)
 			var mix_weights: PackedFloat32Array = [bary[0], bary[1], bary[2]]
 			colors.append(RoundedPolygon2DUtils.mix_colors(mix_colors, mix_weights))
-
-	colors.resize(rounded_polygon.size())
 	return colors
