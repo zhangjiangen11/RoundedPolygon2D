@@ -1,6 +1,3 @@
-extends Object
-class_name RoundedPolygon2DUtils
-
 static func v2_to_v3(v2: Vector2):
 	return Vector3(v2.x, v2.y, 0)
 

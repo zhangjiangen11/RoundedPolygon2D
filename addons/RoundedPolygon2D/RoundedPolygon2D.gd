@@ -34,6 +34,8 @@ var rounded_vertex_colors: PackedColorArray
 ## The computed uv with rounded corners.
 var rounded_uv: PackedVector2Array
 
+const RoundedPolygon2DUtils = preload("res://addons/RoundedPolygon2D/RoundedPolygon2DUtils.gd")
+
 func _check_drawing_mode():
 	# Toggles the default Polygon2D if rounding is not necessary
 	if corner_radius == 0 or corner_detail == 0:

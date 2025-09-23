@@ -1,7 +1,7 @@
 @tool
 extends EditorPlugin
 
-const SCRIPT = preload("res://addons/RoundedPolygon2D/rounded_polygon_2d.gd")
+const SCRIPT = preload("res://addons/RoundedPolygon2D/RoundedPolygon2D.gd")
 const ICON = preload("res://addons/RoundedPolygon2D/RoundedPolygon2D.svg")
 
 func _enter_tree():
