@@ -1,6 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+project.godot
 
 # GD Scene tests
 /tests/
